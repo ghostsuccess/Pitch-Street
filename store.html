@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch & Street — Kit Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --black:   #080808;
+  --surface: #111111;
+  --card:    #161616;
+  --card2:   #1c1c1c;
+  --volt:    #e8ff00;
+  --white:   #ffffff;
+  --grey:    #444444;
+  --grey2:   #888888;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--black);
+  color:var(--white);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ══════════════════════════
+   NAV
+══════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.3rem;letter-spacing:0.18em;
+  color:var(--white);
+  text-decoration:none;
+}
+.nav-brand span{color:var(--volt)}
+
+.nav-right{display:flex;align-items:center;gap:16px}
+
+.nav-wa{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:8px 18px;
+  background:linear-gradient(135deg,#25d366,#128c4a);
+  color:white;
+  font-size:0.68rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  text-decoration:none;border-radius:3px;
+  white-space:nowrap;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.nav-wa:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,211,102,0.35)}
+
+/* Home button */
+.nav-home{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color 0.2s,background 0.2s;
+  flex-shrink:0;text-decoration:none;
+}
+.nav-home:hover{border-color:var(--volt);background:rgba(232,255,0,0.05)}
+.nav-home svg{width:16px;height:16px;fill:none;stroke:var(--white);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* Cart button */
+.cart-btn{
+  position:relative;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color 0.2s,background 0.2s;
+  flex-shrink:0;
+}
+.cart-btn:hover{border-color:var(--volt);background:rgba(232,255,0,0.05)}
+.cart-btn svg{width:16px;height:16px;fill:none;stroke:var(--white);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cart-count{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--volt);color:var(--black);
+  font-size:0.6rem;font-weight:700;
+  display:none;align-items:center;justify-content:center;
+}
+.cart-count.show{display:flex}
+
+/* ══════════════════════════
+   HERO STRIP
+══════════════════════════ */
+.hero-strip{
+  margin-top:56px;
+  padding:48px 20px 40px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.hero-strip h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.8rem,9vw,6rem);
+  line-height:1;
+  letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.hero-strip h1 span{color:var(--volt)}
+.hero-strip p{
+  margin-top:12px;
+  font-size:0.8rem;color:var(--grey2);
+  letter-spacing:0.08em;
+}
+
+/* ══════════════════════════
+   FILTER BAR
+══════════════════════════ */
+.filter-section{
+  position:sticky;top:56px;z-index:100;
+  background:rgba(8,8,8,0.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+
+/* collection tabs */
+.collection-tabs{
+  display:flex;
+  overflow-x:auto;
+  padding:0 16px;
+  gap:0;
+  border-bottom:1px solid var(--border);
+  scrollbar-width:none;
+}
+.collection-tabs::-webkit-scrollbar{display:none}
+.col-tab{
+  padding:14px 20px;
+  font-size:0.68rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--grey2);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  transition:color 0.2s,border-color 0.2s;
+  background:none;border-top:none;border-left:none;border-right:none;
+  flex-shrink:0;
+}
+.col-tab:hover{color:var(--white)}
+.col-tab.active{color:var(--volt);border-bottom-color:var(--volt)}
+
+/* club filters */
+.club-filters{
+  display:flex;
+  overflow-x:auto;
+  padding:10px 16px;
+  gap:8px;
+  scrollbar-width:none;
+}
+.club-filters::-webkit-scrollbar{display:none}
+.club-chip{
+  padding:6px 14px;
+  border-radius:3px;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--grey2);
+  font-size:0.62rem;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.club-chip:hover{border-color:rgba(232,255,0,0.3);color:var(--white)}
+.club-chip.active{
+  background:var(--volt);border-color:var(--volt);
+  color:var(--black);font-weight:700;
+}
+
+/* type filter */
+.type-filters{
+  display:flex;
+  padding:0 16px 10px;
+  gap:8px;
+}
+.type-chip{
+  padding:5px 12px;
+  border-radius:2px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--grey2);
+  font-size:0.6rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.type-chip:hover{border-color:var(--border2);color:var(--white)}
+.type-chip.active{border-color:var(--volt);color:var(--volt)}
+
+/* ══════════════════════════
+   RESULTS BAR
+══════════════════════════ */
+.results-bar{
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.results-count{
+  font-size:0.68rem;color:var(--grey2);letter-spacing:0.08em;
+}
+.results-count span{color:var(--volt);font-weight:600}
+
+/* ══════════════════════════
+   PRODUCT GRID
+══════════════════════════ */
+.store-body{padding:20px}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+  max-width:1200px;margin:0 auto;
+}
+
+/* ══════════════════════════
+   PRODUCT CARD
+══════════════════════════ */
+.p-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:5px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.3s cubic-bezier(.22,.68,0,1.1),border-color 0.3s,box-shadow 0.3s;
+  position:relative;
+}
+.p-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(232,255,0,0.18);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+
+.p-img-wrap{
+  position:relative;
+  width:100%;padding-top:115%;
+  background:#111;overflow:hidden;
+}
+.p-img-wrap::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top,var(--card),transparent);
+  pointer-events:none;
+}
+.p-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;object-position:center 20%;
+  padding:10px;
+  transition:transform 0.4s cubic-bezier(.22,.68,0,1.1);
+}
+.p-card:hover .p-img{transform:scale(1.05)}
+
+/* top bar accent */
+.p-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--volt);z-index:2;
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.p-card:hover::before{transform:scaleX(1)}
+
+/* type badge */
+.p-badge{
+  position:absolute;top:10px;left:10px;z-index:3;
+  padding:3px 8px;border-radius:2px;
+  background:rgba(8,8,8,0.8);backdrop-filter:blur(4px);
+  font-size:0.52rem;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--volt);border:1px solid rgba(232,255,0,0.2);
+}
+
+/* add to cart quick */
+.p-add{
+  position:absolute;top:10px;right:10px;z-index:3;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(8,8,8,0.85);backdrop-filter:blur(4px);
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(0.8);
+  transition:opacity 0.2s,transform 0.2s,background 0.2s,border-color 0.2s;
+}
+.p-card:hover .p-add{opacity:1;transform:scale(1)}
+.p-add:hover{background:var(--volt);border-color:var(--volt)}
+.p-add:hover svg{stroke:var(--black)}
+.p-add svg{width:12px;height:12px;fill:none;stroke:var(--white);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.p-body{padding:12px 12px 14px;position:relative;z-index:1}
+.p-club{
+  font-size:0.55rem;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--volt);margin-bottom:4px;
+}
+.p-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1rem,3vw,1.3rem);
+  line-height:1.1;color:var(--white);
+  margin-bottom:8px;letter-spacing:0.02em;
+}
+.p-footer{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.p-price{
+  font-size:0.78rem;font-weight:700;
+  color:var(--white);letter-spacing:0.04em;
+}
+.p-price.tbd{color:var(--grey2);font-size:0.64rem;font-weight:400}
+
+/* empty state */
+.empty-state{
+  grid-column:1/-1;
+  text-align:center;padding:80px 20px;
+}
+.empty-state h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;letter-spacing:0.08em;color:var(--grey);
+  margin-bottom:8px;
+}
+.empty-state p{font-size:0.8rem;color:var(--grey2)}
+
+/* ══════════════════════════
+   QUICK VIEW MODAL
+══════════════════════════ */
+.modal-bg{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+.modal-bg.open{opacity:1;pointer-events:all}
+
+.modal{
+  position:fixed;bottom:0;left:0;right:0;z-index:301;
+  background:var(--card2);
+  border-top:1px solid var(--border2);
+  border-radius:16px 16px 0 0;
+  padding:24px 20px 40px;
+  transform:translateY(100%);
+  transition:transform 0.4s cubic-bezier(.22,.68,0,1.1);
+  max-height:92svh;overflow-y:auto;
+}
+.modal.open{transform:translateY(0)}
+
+.modal-handle{
+  width:40px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,0.15);
+  margin:0 auto 24px;
+}
+.modal-close{
+  position:absolute;top:20px;right:20px;
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border2);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background 0.2s;
+}
+.modal-close:hover{background:var(--grey)}
+.modal-close svg{width:12px;height:12px;fill:none;stroke:var(--white);stroke-width:2;stroke-linecap:round}
+
+.modal-inner{
+  display:flex;flex-direction:column;gap:20px;
+}
+.modal-img-wrap{
+  width:100%;padding-top:80%;
+  position:relative;background:#111;border-radius:6px;overflow:hidden;
+}
+.modal-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;padding:16px;
+}
+
+.modal-club{
+  font-size:0.6rem;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--volt);margin-bottom:6px;
+}
+.modal-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.6rem,5vw,2.2rem);
+  line-height:1.05;color:var(--white);
+  margin-bottom:6px;letter-spacing:0.02em;
+}
+.modal-type{
+  display:inline-block;
+  padding:4px 10px;border-radius:2px;
+  border:1px solid var(--border2);
+  font-size:0.58rem;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--grey2);margin-bottom:20px;
+}
+.modal-price-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.modal-price{
+  font-size:1.1rem;font-weight:700;color:var(--white);
+}
+.modal-price.tbd{
+  font-size:0.78rem;font-weight:400;color:var(--grey2);
+  font-style:italic;
+}
+
+/* size selector */
+.size-label{
+  font-size:0.6rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--grey2);margin-bottom:10px;display:block;
+}
+.size-grid{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;
+}
+.size-btn{
+  width:46px;height:46px;border-radius:3px;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--white);font-size:0.75rem;font-weight:600;
+  cursor:pointer;transition:all 0.2s;
+}
+.size-btn:hover{border-color:var(--volt);color:var(--volt)}
+.size-btn.selected{
+  background:var(--volt);border-color:var(--volt);color:var(--black);
+}
+
+/* modal actions */
+.modal-actions{display:flex;flex-direction:column;gap:10px}
+.btn-add-cart{
+  width:100%;padding:16px;border-radius:3px;
+  background:var(--volt);color:var(--black);
+  font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-add-cart:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,255,0,0.25)}
+.btn-wa-direct{
+  width:100%;padding:14px;border-radius:3px;
+  background:transparent;color:rgba(255,255,255,0.5);
+  font-size:0.72rem;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  border:1px solid var(--border);cursor:pointer;
+  transition:border-color 0.2s,color 0.2s;
+  text-decoration:none;display:flex;align-items:center;justify-content:center;
+}
+.btn-wa-direct:hover{border-color:rgba(255,255,255,0.2);color:var(--white)}
+
+/* ══════════════════════════
+   CART DRAWER
+══════════════════════════ */
+.cart-bg{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.cart-bg.open{opacity:1;pointer-events:all}
+
+.cart-drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:401;
+  width:min(360px,100vw);
+  background:var(--card2);
+  border-left:1px solid var(--border2);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform 0.4s cubic-bezier(.22,.68,0,1.1);
+}
+.cart-drawer.open{transform:translateX(0)}
+
+.cart-header{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.cart-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.3rem;letter-spacing:0.12em;color:var(--white);
+}
+.cart-close{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border2);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background 0.2s;
+}
+.cart-close:hover{background:var(--grey)}
+.cart-close svg{width:12px;height:12px;fill:none;stroke:var(--white);stroke-width:2;stroke-linecap:round}
+
+.cart-items{flex:1;overflow-y:auto;padding:16px 20px}
+
+/* empty cart */
+.cart-empty{
+  text-align:center;padding:60px 20px;
+}
+.cart-empty p{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;letter-spacing:0.08em;color:var(--grey);
+  margin-bottom:6px;
+}
+.cart-empty span{font-size:0.75rem;color:var(--grey2)}
+
+/* cart item */
+.cart-item{
+  display:flex;gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.cart-item:last-child{border-bottom:none}
+.cart-item-img{
+  width:60px;height:60px;border-radius:3px;
+  object-fit:contain;background:#111;padding:4px;flex-shrink:0;
+}
+.cart-item-info{flex:1}
+.cart-item-club{
+  font-size:0.52rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--volt);margin-bottom:3px;
+}
+.cart-item-name{
+  font-size:0.82rem;font-weight:500;color:var(--white);
+  line-height:1.3;margin-bottom:4px;
+}
+.cart-item-size{
+  font-size:0.62rem;color:var(--grey2);letter-spacing:0.08em;
+}
+.cart-item-remove{
+  background:none;border:none;cursor:pointer;
+  color:var(--grey2);padding:4px;
+  transition:color 0.2s;font-size:0.7rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  align-self:flex-start;
+}
+.cart-item-remove:hover{color:var(--white)}
+
+/* cart footer */
+.cart-footer{
+  padding:16px 20px;
+  border-top:1px solid var(--border);flex-shrink:0;
+}
+.cart-summary{
+  font-size:0.68rem;color:var(--grey2);
+  margin-bottom:14px;line-height:1.6;
+}
+.btn-proceed{
+  width:100%;padding:16px;border-radius:3px;
+  background:var(--volt);color:var(--black);
+  font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-proceed:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(232,255,0,0.25);
+}
+.btn-proceed svg{
+  width:10px;height:10px;fill:none;
+  stroke:var(--black);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.btn-proceed:disabled{
+  opacity:0.35;cursor:not-allowed;transform:none;box-shadow:none;
+}
+.back-btn{
+  width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--border2);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background 0.2s;flex-shrink:0;
+}
+.back-btn:hover{background:var(--grey)}
+.back-btn svg{
+  width:10px;height:10px;fill:none;
+  stroke:var(--white);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.form-sub{
+  font-size:0.72rem;color:var(--grey2);
+  line-height:1.6;margin-bottom:20px;
+}
+.form-group{margin-bottom:14px}
+.form-label{
+  display:block;
+  font-size:0.58rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--grey2);margin-bottom:6px;
+}
+.form-input{
+  width:100%;padding:12px 14px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:3px;color:var(--white);
+  font-family:'Inter',sans-serif;font-size:0.84rem;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  -webkit-appearance:none;
+}
+.form-input:focus{
+  border-color:var(--volt);
+  box-shadow:0 0 0 2px rgba(232,255,0,0.1);
+}
+.form-input::placeholder{color:rgba(255,255,255,0.2)}
+.form-select{
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  background-color:var(--surface);
+  padding-right:32px;
+}
+.form-select option{background:var(--card2);color:var(--white)}
+.form-error{
+  font-size:0.7rem;color:#ff5555;
+  letter-spacing:0.04em;min-height:18px;
+  margin-top:4px;line-height:1.5;
+}
+.btn-send-order{
+  width:100%;padding:16px;border-radius:3px;
+  background:linear-gradient(135deg,#25d366,#128c4a);
+  color:white;font-size:0.78rem;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-send-order:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(37,211,102,0.35);
+}
+
+/* ══════════════════════════
+   TOAST
+══════════════════════════ */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--volt);color:var(--black);
+  padding:12px 24px;border-radius:3px;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  z-index:500;white-space:nowrap;
+  transition:transform 0.35s cubic-bezier(.22,.68,0,1.1),opacity 0.35s;
+  opacity:0;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ══════════════════════════
+   FOOTER
+══════════════════════════ */
+.store-footer{
+  margin-top:60px;padding:28px 20px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.2em;color:rgba(255,255,255,0.2);
+}
+.footer-brand span{color:rgba(232,255,0,0.3)}
+.footer-copy{font-size:0.65rem;color:rgba(255,255,255,0.15);letter-spacing:0.06em}
+
+/* ══════════════════════════
+   RESPONSIVE
+══════════════════════════ */
+@media(min-width:480px){
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+}
+@media(min-width:700px){
+  .product-grid{grid-template-columns:repeat(3,1fr);gap:14px}
+  .modal{max-width:480px;left:50%;right:auto;transform:translateX(-50%) translateY(100%);border-radius:12px;bottom:24px}
+  .modal.open{transform:translateX(-50%) translateY(0)}
+  .modal-inner{flex-direction:row;gap:24px}
+  .modal-img-wrap{width:200px;min-width:200px;padding-top:0;height:220px}
+}
+@media(min-width:1000px){
+  .product-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .store-body{padding:24px 32px}
+  .results-bar{padding:14px 32px}
+}
+@media(min-width:1200px){
+  .product-grid{grid-template-columns:repeat(5,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════
+     NAV
+══════════════════════════ -->
+<nav>
+  <a href="index.html" class="nav-brand">Pitch<span>&</span>Street</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-home" aria-label="Back to home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5"/></svg>
+    </a>
+    <a href="https://api.whatsapp.com/send?phone=27773618272&text=Hi!%20I%20want%20to%20order%20from%20Pitch%20%26%20Street" target="_blank" class="nav-wa">Order</a>
+    <div class="cart-btn" onclick="openCart()">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════
+     HERO STRIP
+══════════════════════════ -->
+<div class="hero-strip">
+  <h1>Wear The <span>Game</span></h1>
+  <p>61 kits available · Local Heroes · World Stage · Tracksuits</p>
+</div>
+
+<!-- ══════════════════════════
+     FILTERS
+══════════════════════════ -->
+<div class="filter-section">
+  <div class="collection-tabs">
+    <button class="col-tab active" onclick="setCollection('all', this)">All Collections</button>
+    <button class="col-tab" onclick="setCollection('collection1', this)">Local Heroes</button>
+    <button class="col-tab" onclick="setCollection('collection2', this)">World Stage</button>
+    <button class="col-tab" onclick="setCollection('collection3', this)">Tracksuits</button>
+  </div>
+  <div class="club-filters" id="clubFilters"></div>
+  <div class="type-filters" id="typeFilters">
+    <button class="type-chip active" onclick="setType('all', this)">All Types</button>
+    <button class="type-chip" onclick="setType('jersey', this)">Jerseys</button>
+    <button class="type-chip" onclick="setType('tracksuit', this)">Tracksuits</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     RESULTS BAR
+══════════════════════════ -->
+<div class="results-bar">
+  <p class="results-count"><span id="resultNum">61</span> products found</p>
+</div>
+
+<!-- ══════════════════════════
+     PRODUCT GRID
+══════════════════════════ -->
+<div class="store-body">
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<!-- ══════════════════════════
+     FOOTER
+══════════════════════════ -->
+<footer class="store-footer">
+  <span class="footer-brand">Pitch<span>&</span>Street</span>
+  <span class="footer-copy">Wear the game. 2025</span>
+</footer>
+
+<!-- ══════════════════════════
+     QUICK VIEW MODAL
+══════════════════════════ -->
+<div class="modal-bg" id="modalBg" onclick="closeModal()"></div>
+<div class="modal" id="modal">
+  <div class="modal-handle"></div>
+  <button class="modal-close" onclick="closeModal()">
+    <svg viewBox="0 0 12 12"><path d="M1 1l10 10M11 1L1 11"/></svg>
+  </button>
+  <div class="modal-inner">
+    <div class="modal-img-wrap">
+      <img class="modal-img" id="modalImg" src="" alt="">
+    </div>
+    <div>
+      <p class="modal-club" id="modalClub"></p>
+      <h2 class="modal-name" id="modalName"></h2>
+      <span class="modal-type" id="modalType"></span>
+      <div class="modal-price-row">
+        <span class="modal-price tbd" id="modalPrice">Price on request</span>
+      </div>
+      <span class="size-label">Select Size</span>
+      <div class="size-grid" id="sizeGrid">
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+        <button class="size-btn" onclick="selectSize(this)">XXL</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-add-cart" onclick="addToCart()">Add to Cart</button>
+        <a class="btn-wa-direct" id="waDirectBtn" href="#" target="_blank">Order This Directly on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     CART DRAWER
+══════════════════════════ -->
+<div class="cart-bg" id="cartBg" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+
+  <!-- STEP 1: CART REVIEW -->
+  <div id="cartStep1">
+    <div class="cart-header">
+      <span class="cart-title">Your Cart</span>
+      <div class="cart-close" onclick="closeCart()">
+        <svg viewBox="0 0 12 12"><path d="M1 1l10 10M11 1L1 11"/></svg>
+      </div>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <p>Cart is empty</p>
+        <span>Browse the collections above</span>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <p class="cart-summary" id="cartSummary"></p>
+      <button class="btn-proceed" id="proceedBtn" onclick="goToStep2()">
+        Proceed to Checkout
+        <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: PERSONAL DETAILS -->
+  <div id="cartStep2" style="display:none;flex-direction:column;height:100%">
+    <div class="cart-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="back-btn" onclick="goToStep1()">
+          <svg viewBox="0 0 10 10"><path d="M9 5H1M4 2L1 5l3 3"/></svg>
+        </button>
+        <span class="cart-title">Your Details</span>
+      </div>
+      <div class="cart-close" onclick="closeCart()">
+        <svg viewBox="0 0 12 12"><path d="M1 1l10 10M11 1L1 11"/></svg>
+      </div>
+    </div>
+
+    <div class="cart-items" style="flex:1;overflow-y:auto;padding:20px">
+      <p class="form-sub">Fill in your details so the seller can contact you to confirm your order.</p>
+
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" id="orderName" class="form-input" placeholder="e.g. Thabo Mokoena" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cell Number</label>
+        <input type="tel" id="orderPhone" class="form-input" placeholder="e.g. 082 000 0000" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" id="orderEmail" class="form-input" placeholder="e.g. thabo@gmail.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Province</label>
+        <select id="orderProvince" class="form-input form-select">
+          <option value="" disabled selected>Select your province</option>
+          <option>Gauteng</option>
+          <option>Western Cape</option>
+          <option>KwaZulu-Natal</option>
+          <option>Eastern Cape</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Free State</option>
+          <option>Northern Cape</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Area / City</label>
+        <input type="text" id="orderArea" class="form-input" placeholder="e.g. Soweto, Johannesburg" autocomplete="address-level2">
+      </div>
+
+      <p class="form-error" id="formError"></p>
+    </div>
+
+    <div class="cart-footer">
+      <button class="btn-send-order" onclick="validateAndSend()">
+        Send Order on WhatsApp
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════
+     TOAST
+══════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- PRODUCTS DATA -->
+<script src="products.js"></script>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const WA_NUMBER = '27773618272'; // replace with seller's number
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentCollection = 'all';
+let currentClub       = 'all';
+let currentType       = 'all';
+let cart              = [];
+let activeProduct     = null;
+let selectedSize      = '';
+
+// ══════════════════════════════════════════
+// CLUBS PER COLLECTION
+// ══════════════════════════════════════════
+const CLUBS = {
+  all: ['All Clubs','Orlando Pirates','Kaizer Chiefs','Bafana Bafana','Springboks','Mamelodi Sundowns','Real Madrid','Manchester City','Arsenal','Liverpool','Manchester United','Chelsea','Barcelona'],
+  collection1: ['All Clubs','Orlando Pirates','Kaizer Chiefs','Bafana Bafana','Springboks','Mamelodi Sundowns'],
+  collection2: ['All Clubs','Real Madrid','Manchester City','Arsenal','Liverpool','Manchester United','Chelsea','Barcelona'],
+  collection3: ['All Clubs','Orlando Pirates','Kaizer Chiefs','Bafana Bafana','Mamelodi Sundowns','Real Madrid','Manchester City','Arsenal','Liverpool','Manchester United','Chelsea','Barcelona'],
+};
+
+// ══════════════════════════════════════════
+// RENDER CLUB FILTERS
+// ══════════════════════════════════════════
+function renderClubFilters(){
+  const wrap = document.getElementById('clubFilters');
+  const clubs = CLUBS[currentCollection] || CLUBS.all;
+  wrap.innerHTML = clubs.map(c =>
+    `<button class="club-chip${currentClub === (c === 'All Clubs' ? 'all' : c) ? ' active' : ''}"
+      onclick="setClub('${c === 'All Clubs' ? 'all' : c}', this)">${c}</button>`
+  ).join('');
+}
+
+// ══════════════════════════════════════════
+// FILTER SETTERS
+// ══════════════════════════════════════════
+function setCollection(val, el){
+  currentCollection = val;
+  currentClub = 'all';
+  document.querySelectorAll('.col-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderClubFilters();
+  renderGrid();
+}
+
+function setClub(val, el){
+  currentClub = val;
+  document.querySelectorAll('.club-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+
+function setType(val, el){
+  currentType = val;
+  document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+
+// ══════════════════════════════════════════
+// FILTER PRODUCTS
+// ══════════════════════════════════════════
+function getFiltered(){
+  return PRODUCTS.filter(p => {
+    const matchCol  = currentCollection === 'all' || p.collection === currentCollection;
+    const matchClub = currentClub === 'all' || p.club === currentClub;
+    const matchType = currentType === 'all' || p.type === currentType;
+    return matchCol && matchClub && matchType;
+  });
+}
+
+// ══════════════════════════════════════════
+// RENDER GRID
+// ══════════════════════════════════════════
+function renderGrid(){
+  const filtered = getFiltered();
+  const grid = document.getElementById('productGrid');
+  document.getElementById('resultNum').textContent = filtered.length;
+
+  if(!filtered.length){
+    grid.innerHTML = `<div class="empty-state"><h3>No kits found</h3><p>Try a different filter</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="p-card" onclick="openModal(${p.id})">
+      <div class="p-img-wrap">
+        <img class="p-img" src="${p.image}" alt="${p.name}" loading="lazy"
+          onerror="this.style.opacity='0.2';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1 1%22/>'">
+        <span class="p-badge">${p.type === 'tracksuit' ? 'Tracksuit' : 'Jersey'}</span>
+        <button class="p-add" onclick="event.stopPropagation();quickAdd(${p.id})" title="Quick add">
+          <svg viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg>
+        </button>
+      </div>
+      <div class="p-body">
+        <p class="p-club">${p.club}</p>
+        <h3 class="p-name">${p.name}</h3>
+        <div class="p-footer">
+          <span class="p-price tbd">Price on request</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p) return;
+  activeProduct = p;
+  selectedSize = '';
+
+  document.getElementById('modalImg').src   = p.image;
+  document.getElementById('modalImg').alt   = p.name;
+  document.getElementById('modalClub').textContent  = p.club;
+  document.getElementById('modalName').textContent  = p.name;
+  document.getElementById('modalType').textContent  = p.type === 'tracksuit' ? 'Tracksuit Set' : 'Jersey';
+  document.getElementById('modalPrice').textContent = 'Price on request — DM to confirm';
+
+  // reset sizes
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+
+  // WA direct link
+  const msg = encodeURIComponent(`Hi! I'm interested in:\n\n*${p.name}*\n${p.club}\nType: ${p.type}\n\nPlease confirm price and availability.`);
+  document.getElementById('waDirectBtn').href = `https://api.whatsapp.com/send?phone=${WA_NUMBER}&text=${msg}`;
+
+  document.getElementById('modalBg').classList.add('open');
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('open');
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+  activeProduct = null;
+  selectedSize = '';
+}
+
+function selectSize(btn){
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedSize = btn.textContent;
+}
+
+// ══════════════════════════════════════════
+// CART
+// ══════════════════════════════════════════
+function addToCart(){
+  if(!activeProduct) return;
+  if(!selectedSize){ showToast('Please select a size'); return; }
+
+  const existing = cart.find(i => i.id === activeProduct.id && i.size === selectedSize);
+  if(existing){
+    showToast('Already in cart');
+    return;
+  }
+
+  cart.push({ ...activeProduct, size: selectedSize });
+  updateCartCount();
+  closeModal();
+  showToast('Added to cart');
+}
+
+function quickAdd(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p) return;
+  openModal(id);
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  updateCartCount();
+  renderCartItems();
+  updateProceedBtn();
+}
+
+function updateCartCount(){
+  const count = document.getElementById('cartCount');
+  count.textContent = cart.length;
+  if(cart.length > 0) count.classList.add('show');
+  else count.classList.remove('show');
+}
+
+function openCart(){
+  renderCartItems();
+  updateProceedBtn();
+  goToStep1();
+  document.getElementById('cartBg').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart(){
+  document.getElementById('cartBg').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCartItems(){
+  const wrap = document.getElementById('cartItems');
+  if(!cart.length){
+    wrap.innerHTML = `<div class="cart-empty"><p>Cart is empty</p><span>Browse the collections above</span></div>`;
+    return;
+  }
+  wrap.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.image}" alt="${item.name}"
+        onerror="this.style.opacity='0.1'">
+      <div class="cart-item-info">
+        <p class="cart-item-club">${item.club}</p>
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-size">Size: ${item.size} · ${item.type === 'tracksuit' ? 'Tracksuit' : 'Jersey'}</p>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${i})">Remove</button>
+    </div>
+  `).join('');
+}
+
+function updateProceedBtn(){
+  const summary = document.getElementById('cartSummary');
+  const btn     = document.getElementById('proceedBtn');
+  if(!cart.length){
+    summary.textContent = '';
+    btn.disabled = true;
+    return;
+  }
+  summary.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} selected`;
+  btn.disabled = false;
+}
+
+function goToStep1(){
+  document.getElementById('cartStep1').style.display = 'flex';
+  document.getElementById('cartStep1').style.flexDirection = 'column';
+  document.getElementById('cartStep1').style.height = '100%';
+  document.getElementById('cartStep2').style.display = 'none';
+}
+
+function goToStep2(){
+  if(!cart.length) return;
+  document.getElementById('cartStep1').style.display = 'none';
+  document.getElementById('cartStep2').style.display = 'flex';
+  document.getElementById('formError').textContent = '';
+}
+
+function validateAndSend(){
+  const err      = document.getElementById('formError');
+  const name     = document.getElementById('orderName').value.trim();
+  const phone    = document.getElementById('orderPhone').value.trim();
+  const email    = document.getElementById('orderEmail').value.trim();
+  const province = document.getElementById('orderProvince').value;
+  const area     = document.getElementById('orderArea').value.trim();
+
+  if(!name)    { err.textContent = 'Please enter your full name'; return; }
+  if(!phone)   { err.textContent = 'Please enter your cell number'; return; }
+  if(!email || !email.includes('@')){ err.textContent = 'Please enter a valid email address'; return; }
+  if(!province){ err.textContent = 'Please select your province'; return; }
+  if(!area)    { err.textContent = 'Please enter your area or city'; return; }
+
+  err.textContent = '';
+
+  // Build order lines
+  const lines = cart.map((item, i) =>
+    `${i + 1}. *${item.name}* — ${item.club}\n   Size: ${item.size} | Type: ${item.type}`
+  ).join('\n\n');
+
+  // WhatsApp message — personal info first, then order
+  const msg = encodeURIComponent(
+    `Hi! I'd like to place an order from Pitch & Street.\n\n` +
+    `*MY DETAILS*\n` +
+    `Name: ${name}\n` +
+    `Cell: ${phone}\n` +
+    `Email: ${email}\n` +
+    `Province: ${province}\n` +
+    `Area: ${area}\n\n` +
+    `*MY ORDER*\n` +
+    `${lines}\n\n` +
+    `Please confirm availability and pricing. Thank you!`
+  );
+
+  window.open(`https://api.whatsapp.com/send?phone=${WA_NUMBER}&text=${msg}`, '_blank');
+
+  cart.length = 0;
+  updateCartCount();
+  renderCartItems();
+  updateProceedBtn();
+  closeCart();
+}
+
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+let toastTimer;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ══════════════════════════════════════════
+// INIT — read URL params from landing page
+// ══════════════════════════════════════════
+(function readParams(){
+  const params = new URLSearchParams(window.location.search);
+  const col  = params.get('col');
+  const club = params.get('club');
+
+  if(col && col !== 'all'){
+    currentCollection = col;
+    // activate correct tab
+    document.querySelectorAll('.col-tab').forEach(t => {
+      t.classList.remove('active');
+      if(t.getAttribute('onclick') && t.getAttribute('onclick').includes(col)){
+        t.classList.add('active');
+      }
+    });
+  }
+
+  if(club){
+    currentClub = club;
+  }
+})();
+
+renderClubFilters();
+renderGrid();
+
+// Highlight active club chip after render
+if(currentClub !== 'all'){
+  document.querySelectorAll('.club-chip').forEach(c => {
+    if(c.textContent.trim() === currentClub){
+      c.classList.add('active');
+    } else {
+      c.classList.remove('active');
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch & Street — Wear The Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--surface:#111111;--card:#161616;
+  --volt:#e8ff00;--white:#ffffff;--grey2:#777777;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(8,8,8,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.18em;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--volt)}
+.nav-wa{display:inline-flex;align-items:center;justify-content:center;padding:8px 18px;background:linear-gradient(135deg,#25d366,#128c4a);color:white;font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:transform 0.2s,box-shadow 0.2s}
+.nav-wa:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,211,102,0.35)}
+
+/* HERO */
+.hero{margin-top:56px;min-height:calc(100svh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(232,255,0,0.05) 0%,transparent 60%)}
+.hero-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.4em;text-transform:uppercase;color:var(--volt);margin-bottom:24px;opacity:0;animation:fadeUp 0.8s 0.2s ease forwards}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem, 8vw, 6rem);line-height:1;letter-spacing:0.04em;white-space:nowrap;color:var(--white);margin-bottom:24px;opacity:0;animation:fadeUp 1s 0.4s ease forwards}
+.hero-title span{color:var(--volt)}
+.hero-desc{font-size:clamp(0.85rem,2vw,1rem);color:rgba(255,255,255,0.38);line-height:1.75;max-width:420px;margin:0 auto 44px;opacity:0;animation:fadeUp 0.9s 0.6s ease forwards}
+.hero-desc strong{color:rgba(255,255,255,0.7);font-weight:500}
+.hero-btns{display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;animation:fadeUp 0.9s 0.8s ease forwards}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 44px;background:var(--volt);color:var(--black);font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;border-radius:3px;width:100%;max-width:320px;transition:transform 0.2s,box-shadow 0.2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,255,0,0.28)}
+.btn-primary svg{width:14px;height:14px;fill:none;stroke:var(--black);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;padding:14px 44px;border:1px solid var(--border2);color:rgba(255,255,255,0.5);font-size:0.74rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border-radius:3px;width:100%;max-width:320px;transition:border-color 0.2s,color 0.2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.3);color:var(--white)}
+
+/* STATS */
+.stats-row{display:flex;gap:0;margin-top:60px;border:1px solid var(--border);border-radius:5px;overflow:hidden;opacity:0;animation:fadeUp 0.8s 1s ease forwards}
+.stat{flex:1;padding:18px 12px;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,5vw,2.4rem);letter-spacing:0.04em;color:var(--volt);display:block;line-height:1;margin-bottom:4px}
+.stat-label{font-size:0.55rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey2)}
+
+/* MARQUEE */
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 0;overflow:hidden;background:var(--surface)}
+.marquee{display:flex;width:max-content;animation:ticker 22s linear infinite}
+.marquee:hover{animation-play-state:paused}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.25em;color:var(--grey2);padding:0 28px;white-space:nowrap}
+.marquee-item span{color:var(--volt)}
+
+/* SECTIONS */
+.section{padding:72px 0 56px;border-bottom:1px solid var(--border)}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 20px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--volt);display:block;margin-bottom:8px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,6vw,4rem);line-height:1;letter-spacing:0.02em;color:var(--white)}
+.section-sub{font-size:0.75rem;color:var(--grey2);margin-top:6px;letter-spacing:0.04em}
+.btn-view-col{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid var(--border2);color:rgba(255,255,255,0.6);font-size:0.64rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;border-radius:3px;white-space:nowrap;transition:border-color 0.2s,color 0.2s,background 0.2s;flex-shrink:0}
+.btn-view-col:hover{border-color:var(--volt);color:var(--volt);background:rgba(232,255,0,0.04)}
+.btn-view-col svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* PRODUCT GRID */
+.p-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.p-card{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden;cursor:pointer;position:relative;transition:transform 0.3s cubic-bezier(.22,.68,0,1.1),border-color 0.3s;text-decoration:none;display:block}
+.p-card:hover{transform:translateY(-4px);border-color:rgba(232,255,0,0.18)}
+.p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--volt);z-index:2;transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease}
+.p-card:hover::before{transform:scaleX(1)}
+.p-img-wrap{width:100%;padding-top:115%;position:relative;background:#111;overflow:hidden}
+.p-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,var(--card),transparent);pointer-events:none}
+.p-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center 20%;padding:10px;transition:transform 0.4s cubic-bezier(.22,.68,0,1.1)}
+.p-card:hover .p-img{transform:scale(1.05)}
+.p-badge{position:absolute;top:10px;left:10px;z-index:3;padding:3px 8px;border-radius:2px;background:rgba(8,8,8,0.82);backdrop-filter:blur(4px);font-size:0.5rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--volt);border:1px solid rgba(232,255,0,0.2)}
+.p-body{padding:12px 12px 14px}
+.p-club{font-size:0.54rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--volt);margin-bottom:4px}
+.p-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(0.95rem,2.5vw,1.25rem);line-height:1.1;color:var(--white);letter-spacing:0.02em}
+.view-all-wrap{text-align:center;margin-top:28px}
+.btn-view-all{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;border:1px solid var(--border2);color:var(--grey2);font-size:0.66rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:border-color 0.2s,color 0.2s}
+.btn-view-all:hover{border-color:var(--volt);color:var(--volt)}
+.btn-view-all svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* BOTTOM CTA */
+.bottom-cta{padding:80px 20px 100px;text-align:center;position:relative;overflow:hidden}
+.bottom-cta-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(232,255,0,0.05),transparent 70%)}
+.bottom-cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,9vw,6.5rem);line-height:0.95;letter-spacing:0.03em;margin-bottom:16px}
+.bottom-cta h2 span{color:var(--volt)}
+.bottom-cta p{font-size:clamp(0.82rem,2vw,0.95rem);color:rgba(255,255,255,0.35);margin-bottom:40px;line-height:1.7}
+.bottom-cta-btns{display:flex;flex-direction:column;align-items:center;gap:12px}
+
+/* FOOTER */
+footer{padding:24px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.2em;color:rgba(255,255,255,0.2)}
+.footer-brand span{color:rgba(232,255,0,0.3)}
+.footer-copy{font-size:0.65rem;color:rgba(255,255,255,0.15);letter-spacing:0.06em}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:0.08s}.rd2{transition-delay:0.16s}.rd3{transition-delay:0.24s}
+
+/* RESPONSIVE */
+@media(min-width:480px){.p-grid{gap:12px}}
+@media(min-width:700px){
+  .p-grid{grid-template-columns:repeat(4,1fr);gap:14px}
+  .hero-btns,.bottom-cta-btns{flex-direction:row;justify-content:center}
+  .btn-primary,.btn-ghost{width:auto}
+}
+@media(min-width:1000px){.section-inner{padding:0 32px}.p-grid{gap:16px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">Pitch<span>&</span>Street</a>
+  <a href="https://api.whatsapp.com/send?phone=27000000000&text=Hi!%20I%20want%20to%20order%20from%20Pitch%20%26%20Street" target="_blank" class="nav-wa">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">Pitch &amp; Street · 2025</p>
+  <h1 class="hero-title">Wear The <span>Game</span></h1>
+  <p class="hero-desc">Your one stop for <strong>official club kits</strong> — local heroes, European giants, and premium tracksuits. All available now.</p>
+  <div class="hero-btns">
+    <a href="store.html" class="btn-primary">
+      Browse All Products
+      <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg>
+    </a>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">61</span><span class="stat-label">Products</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Collections</span></div>
+    <div class="stat"><span class="stat-num">13</span><span class="stat-label">Clubs</span></div>
+    <div class="stat"><span class="stat-num">SA</span><span class="stat-label">Delivered</span></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item">PIRATES <span>✦</span></span>
+    <span class="marquee-item">CHIEFS <span>✦</span></span>
+    <span class="marquee-item">BAFANA <span>✦</span></span>
+    <span class="marquee-item">SUNDOWNS <span>✦</span></span>
+    <span class="marquee-item">SPRINGBOKS <span>✦</span></span>
+    <span class="marquee-item">REAL MADRID <span>✦</span></span>
+    <span class="marquee-item">ARSENAL <span>✦</span></span>
+    <span class="marquee-item">LIVERPOOL <span>✦</span></span>
+    <span class="marquee-item">MAN UNITED <span>✦</span></span>
+    <span class="marquee-item">MAN CITY <span>✦</span></span>
+    <span class="marquee-item">BARCELONA <span>✦</span></span>
+    <span class="marquee-item">CHELSEA <span>✦</span></span>
+    <span class="marquee-item">PIRATES <span>✦</span></span>
+    <span class="marquee-item">CHIEFS <span>✦</span></span>
+    <span class="marquee-item">BAFANA <span>✦</span></span>
+    <span class="marquee-item">SUNDOWNS <span>✦</span></span>
+    <span class="marquee-item">SPRINGBOKS <span>✦</span></span>
+    <span class="marquee-item">REAL MADRID <span>✦</span></span>
+    <span class="marquee-item">ARSENAL <span>✦</span></span>
+    <span class="marquee-item">LIVERPOOL <span>✦</span></span>
+    <span class="marquee-item">MAN UNITED <span>✦</span></span>
+    <span class="marquee-item">MAN CITY <span>✦</span></span>
+    <span class="marquee-item">BARCELONA <span>✦</span></span>
+    <span class="marquee-item">CHELSEA <span>✦</span></span>
+  </div>
+</div>
+
+<!-- COLLECTION 1 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag">Collection 01</span>
+        <h2 class="section-title">Local Heroes</h2>
+        <p class="section-sub">Pirates · Chiefs · Bafana · Springboks · Sundowns — 15 jerseys</p>
+      </div>
+      <a href="store.html?col=collection1" class="btn-view-col">View Collection <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+    <div class="p-grid">
+      <a href="store.html?col=collection1&club=Orlando+Pirates" class="p-card reveal">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey1.png" alt="Orlando Pirates" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Orlando Pirates</p><h3 class="p-name">Ghost Away Kit</h3></div>
+      </a>
+      <a href="store.html?col=collection1&club=Bafana+Bafana" class="p-card reveal rd1">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey2.jpeg" alt="Bafana Bafana" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Bafana Bafana</p><h3 class="p-name">SA Football Association</h3></div>
+      </a>
+      <a href="store.html?col=collection1&club=Kaizer+Chiefs" class="p-card reveal rd2">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey4.jpeg" alt="Kaizer Chiefs" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Kaizer Chiefs</p><h3 class="p-name">Black &amp; Orange Kit</h3></div>
+      </a>
+      <a href="store.html?col=collection1&club=Mamelodi+Sundowns" class="p-card reveal rd3">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey6.jpeg" alt="Mamelodi Sundowns" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Mamelodi Sundowns</p><h3 class="p-name">Ubuntu-Botho Away</h3></div>
+      </a>
+    </div>
+    <div class="view-all-wrap reveal">
+      <a href="store.html?col=collection1" class="btn-view-all">View All 15 Local Jerseys <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION 2 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag">Collection 02</span>
+        <h2 class="section-title">World Stage</h2>
+        <p class="section-sub">Madrid · Arsenal · Liverpool · ManUtd · ManCity · Chelsea · Barca — 23 jerseys</p>
+      </div>
+      <a href="store.html?col=collection2" class="btn-view-col">View Collection <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+    <div class="p-grid">
+      <a href="store.html?col=collection2&club=Real+Madrid" class="p-card reveal">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey3.png" alt="Real Madrid" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Real Madrid</p><h3 class="p-name">Home Emirates Kit</h3></div>
+      </a>
+      <a href="store.html?col=collection2&club=Arsenal" class="p-card reveal rd1">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey5.png" alt="Arsenal" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Arsenal FC</p><h3 class="p-name">Away Lightning Kit</h3></div>
+      </a>
+      <a href="store.html?col=collection2&club=Liverpool" class="p-card reveal rd2">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey7.jpeg" alt="Liverpool" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Liverpool FC</p><h3 class="p-name">Home Standard Chartered</h3></div>
+      </a>
+      <a href="store.html?col=collection2&club=Manchester+United" class="p-card reveal rd3">
+        <div class="p-img-wrap"><span class="p-badge">Jersey</span><img class="p-img" src="featured/jersey8.jpeg" alt="Manchester United" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Manchester United</p><h3 class="p-name">Home Snapdragon Kit</h3></div>
+      </a>
+    </div>
+    <div class="view-all-wrap reveal">
+      <a href="store.html?col=collection2" class="btn-view-all">View All 23 World Stage Jerseys <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION 3 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag">Collection 03</span>
+        <h2 class="section-title">Tracksuits</h2>
+        <p class="section-sub">Full jacket &amp; pants sets — local and European clubs — 23 sets</p>
+      </div>
+      <a href="store.html?col=collection3" class="btn-view-col">View Collection <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+    <div class="p-grid">
+      <a href="store.html?col=collection3&club=Orlando+Pirates" class="p-card reveal">
+        <div class="p-img-wrap"><span class="p-badge">Tracksuit</span><img class="p-img" src="featured/suit1.jpeg" alt="Pirates Tracksuit" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Orlando Pirates</p><h3 class="p-name">Pink Brushstroke Set</h3></div>
+      </a>
+      <a href="store.html?col=collection3&club=Real+Madrid" class="p-card reveal rd1">
+        <div class="p-img-wrap"><span class="p-badge">Tracksuit</span><img class="p-img" src="featured/suit2.jpeg" alt="Real Madrid Tracksuit" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Real Madrid</p><h3 class="p-name">White Training Set</h3></div>
+      </a>
+      <a href="store.html?col=collection3&club=Kaizer+Chiefs" class="p-card reveal rd2">
+        <div class="p-img-wrap"><span class="p-badge">Tracksuit</span><img class="p-img" src="featured/suit3.jpeg" alt="Kaizer Chiefs Tracksuit" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Kaizer Chiefs</p><h3 class="p-name">Grey &amp; Orange Set</h3></div>
+      </a>
+      <a href="store.html?col=collection3&club=Arsenal" class="p-card reveal rd3">
+        <div class="p-img-wrap"><span class="p-badge">Tracksuit</span><img class="p-img" src="featured/suit4.jpeg" alt="Arsenal Tracksuit" loading="lazy"></div>
+        <div class="p-body"><p class="p-club">Arsenal FC</p><h3 class="p-name">Navy Lightning Set</h3></div>
+      </a>
+    </div>
+    <div class="view-all-wrap reveal">
+      <a href="store.html?col=collection3" class="btn-view-all">View All 23 Tracksuits <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-glow"></div>
+  <h2>Your Club.<br><span>Your Kit.</span></h2>
+  <p>61 products available. Browse the full store or order directly on WhatsApp.</p>
+  <div class="bottom-cta-btns">
+    <a href="store.html" class="btn-primary">Browse All 61 Products <svg viewBox="0 0 10 10"><path d="M1 5h8M6 2l3 3-3 3"/></svg></a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">Pitch<span>&</span>Street</span>
+  <span class="footer-copy">Wear the game. 2025</span>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
